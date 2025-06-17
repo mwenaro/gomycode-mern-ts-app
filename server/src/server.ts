@@ -17,6 +17,9 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded())
 
+//cors middleware
+app.use(cors())
+
 
 
 //db connection
