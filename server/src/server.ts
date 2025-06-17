@@ -2,6 +2,7 @@ import express from "express"
 import {config} from 'dotenv'
 import cors from 'cors'
 import { dbConnect } from "./db/dbConnect"
+import { todoRouter } from "./routes/todoRoute"
 
 //load env vars
 config()
@@ -25,7 +26,8 @@ dbConnect()
 app.get("/", (req, res)=>{
 res.json({message:"Welcome to backend"})
 })
-
+//todos route
+app.use("/todos", todoRouter)
 
 
 
