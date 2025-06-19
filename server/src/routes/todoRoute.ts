@@ -6,7 +6,9 @@ const router = Router();
 //POST /
 router.post("/", async (req, res) => {
   try {
+
     const { body } = req;
+    console.log({body})
     const newTodo = await TodoModel.create(body);
     res.status(201).json({ success: true, data: newTodo });
   } catch (error: any) {
@@ -64,7 +66,7 @@ router.put("/:id", async (req, res) => {
 // DELETE / :id
 router.delete("/:id", async (req, res) => {
   try {
-    const deletedTodo = await TodoModel.findOne({ _id: req.params.id });
+    const deletedTodo = await TodoModel.findByIdAndDelete(req.params.id);
     if (!deletedTodo)
       res
         .status(404)
