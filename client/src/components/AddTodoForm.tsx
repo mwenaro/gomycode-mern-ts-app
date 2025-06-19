@@ -5,15 +5,15 @@ interface AddTodoFormProps {
   todo: ITodo | null;
   setTodos: any;
   todos: ITodo[];
+  setSelectedTodo:any
 }
 
-export function AddTodoForm({ todo, setTodos, todos }: AddTodoFormProps) {
+export function AddTodoForm({ todo, setTodos, todos,setSelectedTodo }: AddTodoFormProps) {
   const [newTodo, setNewTodo] = useState<Partial<ITodo>>({ title: "" });
   useEffect(()=>{
-    // console.log({todo})
-    setNewTodo(todo||{title:""})
+        setNewTodo(todo||{title:""})
   },[todo])
-// console.log({newTodo})
+
   // handle change
   function handleChange(e: any) {
     setNewTodo({ ...newTodo, title: e.target.value });
@@ -35,11 +35,12 @@ export function AddTodoForm({ todo, setTodos, todos }: AddTodoFormProps) {
         if (!body.success) throw Error("An Error has occured!");
        
         if (body.data){
-          if(newTodo._id) return setTodos(todos.map(t=>t._id===newTodo._id?body.data:t))
-           setTodos([body.data, ...todos]);
+          if(newTodo._id) setTodos(todos.map(t=>t._id===newTodo._id?body.data:t))
+           else setTodos([body.data, ...todos]);
+
           }
-        alert("Todo Added Successfully");
-        
+        alert(`Todo ${newTodo._id? 'Updated' : 'Added'} Successfully`);
+        setSelectedTodo(null)
         setNewTodo({ title: "" });
       })
       .catch((error: any) => console.log("Error " + error.message));
